@@ -33,7 +33,9 @@ async def health():
 from .api.agents import router as agents_router
 from .api.conversations import router as conversations_router
 from .api.messages import router as messages_router
+from .api.model_configs import router as model_configs_router
 
 app.include_router(agents_router)
 app.include_router(conversations_router)
 app.include_router(messages_router)
+app.include_router(model_configs_router)

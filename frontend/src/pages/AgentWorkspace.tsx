@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAgentStore } from '../store/agentStore';
 import { useChatStore } from '../store/chatStore';
@@ -16,32 +16,29 @@ export default function AgentWorkspace() {
   const { currentAgent, fetchAgent, loading: agentLoading } = useAgentStore();
   const {
     conversations, currentConversation, messages, sending, activeMsgId,
-    fetchConversations, fetchAllConversations, createConversation,
+    fetchConversations, createConversation,
     selectConversation, deleteConversation,
     sendMessage, appendAssistantMessage, appendToken,
   } = useChatStore();
   const { updateTask, setCurrentMsgId } = useTaskStore();
-  const [convInitialized, setConvInitialized] = useState(false);
+  const convInitializedRef = useRef(false);
 
   useEffect(() => {
     if (agentId) {
       fetchAgent(agentId);
-      // Load all conversations (personal + group)
-      fetchAllConversations();
+      fetchConversations(agentId);
     }
-  }, [agentId, fetchAgent, fetchAllConversations]);
+  }, [agentId, fetchAgent, fetchConversations]);
 
   useEffect(() => {
-    if (!convInitialized && !agentLoading && agentId) {
+    if (!convInitializedRef.current && !agentLoading && agentId) {
       const { conversations } = useChatStore.getState();
       if (conversations.length > 0) {
         selectConversation(conversations[0]);
-      } else {
-        createConversation(agentId).catch(() => {});
       }
-      setConvInitialized(true);
+      convInitializedRef.current = true;
     }
-  }, [agentId, agentLoading, convInitialized, selectConversation, createConversation]);
+  }, [agentId, agentLoading, selectConversation]);
 
   useEffect(() => {
     if (!activeMsgId || !currentConversation) return;

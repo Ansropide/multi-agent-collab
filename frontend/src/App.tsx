@@ -5,6 +5,7 @@ import AgentCreate from './pages/AgentCreate';
 import AgentWorkspace from './pages/AgentWorkspace';
 import GroupList from './pages/GroupList';
 import GroupCreate from './pages/GroupCreate';
+import Settings from './pages/Settings';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/agents/:agentId/workspace" element={<AgentWorkspace />} />
         <Route path="/groups" element={<GroupList />} />
         <Route path="/groups/create" element={<GroupCreate />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </BrowserRouter>
   );
