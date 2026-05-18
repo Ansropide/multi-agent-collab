@@ -57,7 +57,11 @@
       "Bash(start http://localhost:5175)",
       "Bash(lsof -ti:5173)",
       "Bash(xargs kill)",
-      "Bash(lsof -ti:5174)"
+      "Bash(lsof -ti:5174)",
+      "Bash(git rm *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git config *)"
     ]
   }
 }
